@@ -16,6 +16,11 @@ export interface Task {
   name: string;
   start: Date;
   end: Date;
+  /** Optional planned/actual dates for baseline rendering */
+  plannedStart?: Date;
+  plannedEnd?: Date;
+  actualStart?: Date;
+  actualEnd?: Date;
   /**
    * From 0 to 100
    */
@@ -142,4 +147,6 @@ export interface StylingOption {
 
 export interface GanttProps extends EventOption, DisplayOption, StylingOption {
   tasks: Task[];
+  /** Optional: show baseline below each task */
+  baselineView?: "planned" | "actual";
 }

@@ -8,7 +8,9 @@ export interface BarBaselineProps {
   color: string;
 }
 
-export const BarBaseline: React.FC<BarBaselineProps> = ({ x, y, width, height, color }: BarBaselineProps) => (
+export const BarBaseline: React.FC<
+  BarBaselineProps & React.SVGProps<SVGRectElement>
+> = ({ x, y, width, height, color, ...rest }) => (
   <rect
     x={x}
     y={y}
@@ -20,5 +22,6 @@ export const BarBaseline: React.FC<BarBaselineProps> = ({ x, y, width, height, c
     strokeDasharray="4,2"
     rx={2}
     ry={2}
+    {...rest}
   />
 );

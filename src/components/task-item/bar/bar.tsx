@@ -75,17 +75,64 @@ export const Bar: React.FC<BarProps> = ({
     }
   }
 
+  // Tooltip state for baseline
+  const [showBaselineTooltip, setShowBaselineTooltip] = React.useState(false);
+
+  // Compose a pseudo-task for the baseline tooltip
+  let baselineTask: typeof task | undefined = undefined;
+  if (baselineStart && baselineEnd) {
+    baselineTask = {
+      ...task,
+      start: baselineStart,
+      end: baselineEnd,
+    };
+  }
+
   return (
     <g className={styles.barWrapper} tabIndex={0}>
       {/* Baseline bar below main bar, always rendered first */}
       {baselineX1 !== undefined && baselineX2 !== undefined && (
-        <BarBaseline
-          x={baselineX1}
-          y={task.y + task.height + 2}
-          width={baselineX2 - baselineX1}
-          height={4}
-          color="violet"
-        />
+        <>
+          <BarBaseline
+            x={baselineX1}
+            y={task.y + task.height + 2}
+            width={baselineX2 - baselineX1}
+            height={4}
+            color="blue"
+            onMouseEnter={() => setShowBaselineTooltip(true)}
+            onMouseLeave={() => setShowBaselineTooltip(false)}
+          />
+          {showBaselineTooltip && baselineTask && (
+            <foreignObject
+              x={baselineX1}
+              y={task.y + task.height + 8}
+              width={180}
+              height={40}
+              style={{ pointerEvents: "none" }}
+            >
+              <div
+                style={{
+                  background: "white",
+                  border: "1px solid #ccc",
+                  borderRadius: 4,
+                  padding: 4,
+                  fontSize: 12,
+                  color: "#333",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                }}
+              >
+                <div>
+                  <b>
+                    {baselineView === "planned" ? "Actual" : "Planned"} Baseline
+                  </b>
+                </div>
+                <div>Start: {baselineTask.start.toLocaleString()}</div>
+                <div>End: {baselineTask.end.toLocaleString()}</div>
+                <div>Task: {baselineTask.name}</div>
+              </div>
+            </foreignObject>
+          )}
+        </>
       )}
       {/* Main bar */}
       <BarDisplay

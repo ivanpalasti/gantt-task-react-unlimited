@@ -77,6 +77,16 @@ export const Bar: React.FC<BarProps> = ({
 
   return (
     <g className={styles.barWrapper} tabIndex={0}>
+      {/* Baseline bar below main bar, always rendered first */}
+      {baselineX1 !== undefined && baselineX2 !== undefined && (
+        <BarBaseline
+          x={baselineX1}
+          y={task.y + task.height + 2}
+          width={baselineX2 - baselineX1}
+          height={4}
+          color="red"
+        />
+      )}
       {/* Main bar */}
       <BarDisplay
         x={task.x1}
@@ -92,16 +102,6 @@ export const Bar: React.FC<BarProps> = ({
           isDateChangeable && onEventStart("move", task, e);
         }}
       />
-      {/* Baseline bar below main bar */}
-      {baselineX1 !== undefined && baselineX2 !== undefined && (
-        <BarBaseline
-          x={baselineX1}
-          y={task.y + task.height + 2}
-          width={baselineX2 - baselineX1}
-          height={4}
-          color="#888"
-        />
-      )}
       <g className="handleGroup">
         {isDateChangeable && (
           <g>

@@ -84,7 +84,7 @@ export const Bar: React.FC<BarProps> = ({
           y={task.y + task.height + 2}
           width={baselineX2 - baselineX1}
           height={4}
-          color="red"
+          color="violet"
         />
       )}
       {/* Main bar */}

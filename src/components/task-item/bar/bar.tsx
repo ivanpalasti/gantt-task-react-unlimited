@@ -92,7 +92,7 @@ export const Bar: React.FC<BarProps> = ({
     <g className={styles.barWrapper} tabIndex={0}>
       {/* Baseline bar below main bar, always rendered first */}
       {baselineX1 !== undefined && baselineX2 !== undefined && (
-        <>
+        <g>
           <BarBaseline
             x={baselineX1}
             y={task.y + task.height + 2}
@@ -132,7 +132,7 @@ export const Bar: React.FC<BarProps> = ({
               </div>
             </foreignObject>
           )}
-        </>
+        </g>
       )}
       {/* Main bar */}
       <BarDisplay

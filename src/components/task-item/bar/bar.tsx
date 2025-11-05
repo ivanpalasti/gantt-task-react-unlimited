@@ -27,15 +27,15 @@ export const Bar: React.FC<BarProps> = ({
   );
   const handleHeight = task.height - 2;
 
-  // Baseline logic
+  // Baseline logic: always show the opposite of the main bar
   let baselineStart: Date | undefined;
   let baselineEnd: Date | undefined;
   if (baselineView === "planned") {
-    baselineStart = task.plannedStart;
-    baselineEnd = task.plannedEnd;
-  } else if (baselineView === "actual") {
     baselineStart = task.actualStart;
     baselineEnd = task.actualEnd;
+  } else if (baselineView === "actual") {
+    baselineStart = task.plannedStart;
+    baselineEnd = task.plannedEnd;
   }
 
   // Calculate baseline bar position (reuse main bar logic if possible)

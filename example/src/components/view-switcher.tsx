@@ -1,6 +1,6 @@
 import React from "react";
-import "gantt-task-react/dist/index.css";
-import { ViewMode } from "gantt-task-react";
+import "gantt-task-react-unlimited/dist/index.css";
+import { ViewMode } from "gantt-task-react-unlimited";
 type ViewSwitcherProps = {
   isChecked: boolean;
   onViewListChange: (isChecked: boolean) => void;

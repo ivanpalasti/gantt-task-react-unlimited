@@ -6,6 +6,26 @@ export function initTasks() {
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
       end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
+      plannedStart: new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        1
+      ),
+      plannedEnd: new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        15
+      ),
+      actualStart: new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        2
+      ), // different from planned
+      actualEnd: new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        14
+      ), // different from planned
       name: "Some Project",
       id: "ProjectSample",
       progress: 25,
@@ -22,6 +42,30 @@ export function initTasks() {
         12,
         28
       ),
+      plannedStart: new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        1
+      ),
+      plannedEnd: new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        2,
+        12,
+        28
+      ),
+      actualStart: new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        2
+      ), // different from planned
+      actualEnd: new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        2,
+        18,
+        0
+      ), // different from planned
       name: "Idea",
       id: "Task 0",
       progress: 45,

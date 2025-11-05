@@ -1,14 +1,17 @@
 import React from "react";
-import { Task, ViewMode, Gantt } from "gantt-task-react";
+import { Task, ViewMode, Gantt } from "gantt-task-react-unlimited";
 import { ViewSwitcher } from "./components/view-switcher";
 import { getStartEndDateForProject, initTasks } from "./helper";
-import "gantt-task-react/dist/index.css";
+import "gantt-task-react-unlimited/dist/index.css";
 
 // Init
 const App = () => {
   const [view, setView] = React.useState<ViewMode>(ViewMode.Day);
   const [tasks, setTasks] = React.useState<Task[]>(initTasks());
   const [isChecked, setIsChecked] = React.useState(true);
+  const [baselineView, setBaselineView] = React.useState<"planned" | "actual">(
+    "planned"
+  );
   let columnWidth = 65;
   if (view === ViewMode.Year) {
     columnWidth = 350;
@@ -17,6 +20,33 @@ const App = () => {
   } else if (view === ViewMode.Week) {
     columnWidth = 250;
   }
+
+  // Preprocess tasks so start/end reflect baselineView, and baseline fields are always the "other"
+  const processedTasks = tasks.map(task => {
+    if (baselineView === "planned" && task.plannedStart && task.plannedEnd) {
+      return {
+        ...task,
+        start: task.plannedStart,
+        end: task.plannedEnd,
+        actualStart: task.actualStart ?? task.start,
+        actualEnd: task.actualEnd ?? task.end,
+        plannedStart: task.plannedStart,
+        plannedEnd: task.plannedEnd,
+      };
+    }
+    if (baselineView === "actual" && task.actualStart && task.actualEnd) {
+      return {
+        ...task,
+        start: task.actualStart,
+        end: task.actualEnd,
+        plannedStart: task.plannedStart ?? task.start,
+        plannedEnd: task.plannedEnd ?? task.end,
+        actualStart: task.actualStart,
+        actualEnd: task.actualEnd,
+      };
+    }
+    return task;
+  });
 
   const handleTaskChange = (task: Task) => {
     console.log("On date change Id:" + task.id);
@@ -74,10 +104,33 @@ const App = () => {
         onViewListChange={setIsChecked}
         isChecked={isChecked}
       />
+      <div style={{ margin: "1em 0" }}>
+        <label>
+          <input
+            type="radio"
+            name="baselineView"
+            value="planned"
+            checked={baselineView === "planned"}
+            onChange={() => setBaselineView("planned")}
+          />{" "}
+          Planned (main bar shows planned, baseline shows actual)
+        </label>
+        <label style={{ marginLeft: "1em" }}>
+          <input
+            type="radio"
+            name="baselineView"
+            value="actual"
+            checked={baselineView === "actual"}
+            onChange={() => setBaselineView("actual")}
+          />{" "}
+          Actual (main bar shows actual, baseline shows planned)
+        </label>
+      </div>
       <h3>Gantt With Unlimited Height</h3>
       <Gantt
-        tasks={tasks}
+        tasks={processedTasks}
         viewMode={view}
+        baselineView={baselineView}
         onDateChange={handleTaskChange}
         onDelete={handleTaskDelete}
         onProgressChange={handleProgressChange}
@@ -90,8 +143,9 @@ const App = () => {
       />
       <h3>Gantt With Limited Height</h3>
       <Gantt
-        tasks={tasks}
+        tasks={processedTasks}
         viewMode={view}
+        baselineView={baselineView}
         onDateChange={handleTaskChange}
         onDelete={handleTaskDelete}
         onProgressChange={handleProgressChange}

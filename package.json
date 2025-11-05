@@ -62,5 +62,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "gantt-task-react-unlimited": "github:ivanpalasti/gantt-task-react-unlimited"
+  }
 }

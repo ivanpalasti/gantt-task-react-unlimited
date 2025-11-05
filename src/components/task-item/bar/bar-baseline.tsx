@@ -19,7 +19,6 @@ export const BarBaseline: React.FC<
     fill={color}
     opacity={0.5}
     stroke={color}
-    strokeDasharray="4,2"
     rx={2}
     ry={2}
     {...rest}

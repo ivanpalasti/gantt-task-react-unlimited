@@ -65,6 +65,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   onDelete,
   onSelect,
   onExpanderClick,
+  baselineView,
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const taskListRef = useRef<HTMLDivElement>(null);
@@ -406,7 +407,9 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     fontSize,
     rtl,
   };
-  const barProps: TaskGanttContentProps = {
+  const barProps: TaskGanttContentProps & {
+    baselineView?: "planned" | "actual";
+  } = {
     tasks: barTasks,
     dates: dateSetup.dates,
     ganttEvent,
@@ -429,6 +432,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     onDoubleClick,
     onClick,
     onDelete,
+    baselineView,
   };
 
   const tableProps: TaskListProps = {

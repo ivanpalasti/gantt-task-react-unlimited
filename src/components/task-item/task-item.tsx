@@ -21,6 +21,7 @@ export type TaskItemProps = {
     selectedTask: BarTask,
     event?: React.MouseEvent | React.KeyboardEvent
   ) => any;
+  baselineView?: "planned" | "actual";
 };
 
 export const TaskItem: React.FC<TaskItemProps> = props => {
@@ -51,7 +52,7 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
         setTaskItem(<BarSmall {...props} />);
         break;
       default:
-        setTaskItem(<Bar {...props} />);
+        setTaskItem(<Bar {...props} baselineView={props.baselineView} />);
         break;
     }
   }, [task, isSelected]);

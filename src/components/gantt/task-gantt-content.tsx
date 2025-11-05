@@ -32,7 +32,9 @@ export type TaskGanttContentProps = {
   setSelectedTask: (taskId: string) => void;
 } & EventOption;
 
-export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
+export const TaskGanttContent: React.FC<
+  TaskGanttContentProps & { baselineView?: "planned" | "actual" }
+> = ({
   tasks,
   dates,
   ganttEvent,
@@ -55,6 +57,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
   onDoubleClick,
   onClick,
   onDelete,
+  baselineView,
 }) => {
   const point = svg?.current?.createSVGPoint();
   const [xStep, setXStep] = useState(0);
@@ -293,6 +296,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
               key={task.id}
               isSelected={!!selectedTask && task.id === selectedTask.id}
               rtl={rtl}
+              baselineView={baselineView}
             />
           );
         })}
